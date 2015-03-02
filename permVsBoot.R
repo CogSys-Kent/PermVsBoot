@@ -75,8 +75,8 @@ peak2peak_stat<-function(signal,start,max_end,end,size){
 trials<-50 # number of trials per condition
 len<-2200  #number of time points per trial (based on the time file)
 ns<-10 #scaling factor of the noise -- not important for this test
-p2p_start<-801 #(which time==801) Selecting realistic time periods to search for p2p based on the time availabe here, in order to keep consistent for tests with signal 
-p2p_max_end<-2001 #(which time==801)
+p2p_start<-801 #(which time==300) Selecting realistic time periods to search for p2p based on the time availabe here, in order to keep consistent for tests with signal 
+p2p_max_end<-2001 #(which time==900)
 p2p_end<-2200 #end of trial 
 p2p_win<-200 #size of p2p internal window 200 tp=100 ms 
 numberoftests<-10000 #How many test to perform
