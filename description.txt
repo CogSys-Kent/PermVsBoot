@@ -1,0 +1,45 @@
+#------README.txt --- permVsBoot.R description
+#------Author: Alexia Zoumpoulaki
+Use the permVsBoot.R script to test differences produced under the null hypothesis
+for the peak to peak measurement applied to ERP's
+The test creates noise EEG data sets and then calculates p-values, for the p2p measurement, generated using bootstrap and using permutation. The goal is to compare the distribution of p-values.
+For the bootstrap: at each resampling a new ERP is generated for each condition, by selecting with replacement from the available trials (of each condition)and then p2p measurement is calculated. After all the resamplings the p-value is calculated as the proportion of the bootstrap values that are greater than 0
+For the permutation: at each resampling a new ERP is generated for each condition, by randomly assigning trials to conditions, and the p2p is measured. A p-value is calculated as the proportion of permutation values that are greater than the true observed value (value of the original set).
+The script saves the result to Rda and cdv file and produces a pdf image that compares the p-value distributions.
+
+This is a pseudocode of how the p-values are calculated.
+for each test (tests = 10000)
+Steps:
+1st-- Generate 2 EEG sets (first condition vs second condition)
+	first condition i.e. (fc<-createnoiseeeg(trials,len,ns))
+	sc<-createnoiseeeg(trials,len,ns)
+	No difference between them 
+2nd-- Generate 2 ERPS
+	First condition ERP 
+	Second Condition ERP
+	Calculate p2p measurement for each one of these
+	Save difference to be use as the true observed value for the permuation
+3rd-- Start Resampling (number of resamplings = 1000)
+	For each Resampling:
+	  a)Generate bootstraped first condition by selecting with replacement from the set
+		of trials of the first condition
+		Generate boostraped second condition by selecting with replacement from the set 
+		of trials of the second condition 
+		Generate two ERPs  from the bootstraped EEGs 
+		Calculate p2p on each ERP 
+		Save the difference
+	  b)Create two permuted condition by randomly choosing from the set of all available
+	    trials. Generate two ERPs, calculate p2p and save difference
+4th- END of one resampling
+	  a)Calculate bootstrap p-value = 1- (number of bootstrapped differences greater 
+	  									  than 0/ number of resampling )
+	  b)Calculate permutation p-value = number of permuted differences greater than true
+	  								    observed/ number of resampling
+	  Go to Step 1
+5th-- END of tests
+       plot histogram of 10000 boostrapped p-values
+       plot histogram of 10000 permuted p-values
+		
+
+
+
