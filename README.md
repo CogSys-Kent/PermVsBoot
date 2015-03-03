@@ -70,5 +70,8 @@ Plot comparative histogram of bootstrap p-values and permutation p-values. Save 
 
 The results of this test have been published in: [Zoumpoulaki, Alexia, Abdulmajeed Alsufyani, and Howard Bowman. "Resampling the peak, some dos and don'ts." *Psychophysiology* (2014)] (http://onlinelibrary.wiley.com/doi/10.1111/psyp.12363/abstract?systemMessage=Wiley+Online+Library+will+be+disrupted+on+7th+March+from+10%3A00-13%3A00+GMT+%2805%3A00-08%3A00+EST%29+for+essential+maintenance.++Apologies+for+the+inconvenience.&userIsAuthenticated=true&deniedAccessCustomisedMessage=). 
 
+Comparison of p values obtained from 10,000 bootstrap tests vs. 10,000 permutation tests. p Values were obtained for p2p measurement on simulated noise EEG data. Using the chi-squared test to check for uniformity, we can reject the hypothesis that the bootstrap distribution is uniform (p value < 22 × 10−17 while for permutation p value = 0.3915).
+
+
 ![Comparision of distributions generated from the test. Results from 10000 tests.] [image]
 [image]: https://github.com/CogSys-Kent/PermVsBoot/blob/master/figure2.jpg
