@@ -146,9 +146,25 @@ save(results, file = paste('permvboot',numberoftests,'_nr',numberofreps,'_trials
 write.csv(results,file = paste('permvboot',numberoftests,'_nr',numberofreps,'_trials',trials ,'p2p',p2p_win,'noise_',ns,'.csv', sep=''))
 
 #--------Visualise Results
-pdf("results.pdf") 
-par(xpd=TRUE)
-hist(p_values_z,main=paste0("Histogram of p-values \n",numberoftests,", tests ",numberofreps," resamplings\n pure noise"),col=rgb(1,0,0,1/4),xlab='p-values')
-hist(p_values_perm,col=rgb(0,0,1,1/4),add=TRUE)
-legend(-0.01,-15,c("boot","perm"), lty = c(1,1),lwd=2,col=c("red","blue"),bty ="n")
+#Commented code: graphs in the same plot
+#pdf("results.pdf") 
+#par(xpd=TRUE)
+#hist(p_values_z,main=paste0("Histogram of p-values \n",numberoftests,", tests ",numberofreps," resamplings\n pure noise"),col=rgb(1,0,0,1/4),xlab='p-values')
+#hist(p_values_perm,col=rgb(0,0,1,1/4),add=TRUE)
+#legend(-0.01,-15,c("boot","perm"), lty = c(1,1),lwd=2,col=c("red","blue"),bty ="n")
+#dev.off()
+mybreaks<-seq(0,1,by=0.05)
+pdf('results.pdf')
+op <- par(xpd=NA,
+          mfrow = c(2, 1), 
+          oma = c(2,2.5,1,0),
+          mar = c(3.5,2.5,3.5,0) + .1 # Outer margins
+          #xpd=TRUE
+)
+hist(p_values_z,xlab="p-values",breaks=mybreaks,main='')
+title("Distribution of p-values obtained from bootstrap", cex.main=0.8,line =0.5)
+mtext(paste0("Comparison of p-value distributions from \n",numberoftests, " tests"), side=3, line=2)
+hist(p_values_perm,xlab="p-values",breaks=mybreaks,main="")
+title("Distribution of p-values obtained from permutation", cex.main=0.8,line =0.5)
 dev.off()
+
