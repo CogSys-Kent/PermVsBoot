@@ -3,7 +3,7 @@
 
 ### The goal of this project is to exlpore differences in the distributions of p-values from two different resampling methods, bootstrap and permution under the null hypothesis for EEG data. 
 
-  The statisic under exploration is peak to peak.  Peak to peak (p2p) is a method commonly used in signal processing and is calculated by finding the distance between a peak and a trout. Usually instead of identifying a single point to describe the peak/trout a mean amplitude window is used. For example one will look for the maximum 100 ms window within a range of the signal and then look for the minimum 100 ms window and calculate the difference between them. The p2p function can be found in the
+  The statisic under exploration is peak to peak.  Peak to peak (p2p) is a method commonly used in signal processing and is calculated by finding the distance between a peak and a trough. Usually instead of identifying a single point to describe the peak/trough a mean amplitude window is used. For example one will look for the maximum 100 ms window within a range of the signal and then look for the minimum 100 ms window and calculate the difference between them. The p2p function can be found in the permVsBoot.R script.
 ```
 peak2peak_stat<-function(signal,start,max_end,end,size){    
   ...
@@ -11,11 +11,11 @@ peak2peak_stat<-function(signal,start,max_end,end,size){
   return (max_avg_peak - min_avg_peak)
 }
 ```
-  The test creates noise EEG data sets using the createnoiseeeg() function, which generates noise at the spectrum of human EEG. The noiseR function is adopted from [Generation of simulated EEG data project](http://www.cs.bris.ac.uk/~rafal/phasereset/). 
+  The test creates noise EEG data sets using the createnoiseeeg() function, which generates noise at the spectrum of human EEG. The noiseR function is adopted from the: [Generation of simulated EEG data project](http://www.cs.bris.ac.uk/~rafal/phasereset/). 
 
-  The **bootstrap** method is applied as following: At each resampling a new surrogate ERP is generated for each condition, by selecting with replacment from the available trials (of each condition). Then the p2p value is calculated for each of the two surrogate ERPs and the difference of p2p values is then stored. The p-value is calculated as the proportion of the values (i.e. differences) that are greater than 0.
+  The **bootstrap** method is applied as following: At each resampling a new surrogate ERP is generated for each condition, by selecting with replacement from the available single trials (of each condition). Then the p2p value is calculated for each of the two surrogate ERPs and the difference of p2p values is then stored. The p-value is calculated as the proportion of the values (i.e. differences) that are greater than 0.
   
-  For the **permutation**, at each resampling a new surrogate ERP is generated for each condition by randomly assigning trials to conditions. Then the p2p value is calculated for each of the surrogate ERPs and the difference between them is stored in a matrix. The p-value is calculated as the proportion of values (in this case p2p differences) that are greater than the true observerd value (value of the original set)
+  For the **permutation**, at each resampling a new surrogate ERP is generated for each condition by randomly assigning single trials to conditions. Then the p2p value is calculated for each of the surrogate ERPs and the difference between them is stored. The p-value is calculated as the proportion of values (in this case p2p differences) that are greater than the true observerd value (value of the original set)
 
 ## Output
   The script saves the results (p-values) to an .Rda file, a .csv file and also creates a .pdf image that compares the two distributions.
@@ -28,9 +28,9 @@ peak2peak_stat<-function(signal,start,max_end,end,size){
 * p2p_start: point where to start looking for the peak. Selecting realistic time periods to search for p2p based on the time file availabe here, in order to keep consistent for tests with signal. It is set to 801 which corresponds to 300ms
 * p2p_max_end: point where to stop looking for the peak. It is set to 2001 which corresponds to 1000ms
 * p2p_end: point where to stop looking for the miminum. It is set to the end of the signal 
-* p2p_win: size of the p2p internal window. It is set to 200 timepoints which corresponds to 100ms windows as it is commonly used
+* p2p_win: size of the p2p internal window. It is set to 200 timepoints which corresponds to a 100ms window as is commonly used
 * numberoftests: how many tests to perform. This is the number of p-values produced by the test
-* numberofreps: how many resampling to do at each step. Usually set to a minimum of 1000 repetitions
+* numberofreps: how many resamplings to do at each step. Usually set to a minimum of 1000 repetitions
 
 ## Data
   There are three data files available:
@@ -49,12 +49,12 @@ peak2peak_stat<-function(signal,start,max_end,end,size){
     * First condition ERP 
     * Second Condition ERP
     * Calculate p2p measurement for each one of these
-    * Save differences to be use as the true observed value for the permutation
+    * Save difference to be used as the true observed value for the permutation
   * **START RESAMPLING**
     * **FOR EACH RESAMPLING**
       * Generate bootstraped first condition by selecting with replacement from the set
-		of trials of the first condition.Generate boostraped second condition by selecting with replacement from the set 
-		of trials of the second condition. Generate two ERPs  from the bootstraped EEGs. Calculate p2p on each ERP. Save the difference.
+		of single trials of the first condition.Generate boostraped second condition by selecting with replacement from the set 
+		of single trials of the second condition. Generate two ERPs  from the bootstraped EEGs. Calculate p2p on each ERP. Save the difference.
       * Create two permuted conditions by randomly choosing from the set of all available trials. Generate two ERPs, calculate p2p and save difference.
       * **END RESAMPLING**
   * **END RESAMPLINGS/TEST**
